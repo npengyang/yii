@@ -1,0 +1,27 @@
+.page-funcs{
+    margin-bottom: 15px;
+    margin-top: 15px;
+    padding-bottom: 15px;
+    border-bottom: #EEE solid 1px;
+    overflow: hidden;
+}
+
+.page-funcs form{
+    display: inline;
+    float: right;
+}
+.btn {
+    border-color:#ffffff;
+}
+
+
+.form-horizontal .form-group{
+    margin-left:0px;
+    margin-right:0px;
+}
+.form-group{
+    margin-bottom: 0px;
+    margin-top:18px;
+}
+
+

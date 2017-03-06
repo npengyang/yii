@@ -1,0 +1,51 @@
+<script type="text/javascript">
+	try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+</script>
+<div class="main-container-inner">
+	<a class="menu-toggler" id="menu-toggler" href="#">
+		<span class="menu-text"></span>
+	</a>
+	<div class="sidebar" id="sidebar">
+		<script type="text/javascript">
+			try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
+		</script>
+		<ul class="nav nav-list">
+			<{foreach $menus as $key => $vo}>
+				<{if $vo.parent == 0 && empty($vo.child)}>
+					<li class="<{$vo.active}>">
+						<a href="index.php?r=<{$vo.route}>">
+							<i class="<{$vo.icon}>"></i>
+							<span class="menu-text"> <{$vo.name}> </span>
+						</a>
+					</li>
+				<{else}>
+					<li class="<{$vo.active}>">
+						<a href="#" class="dropdown-toggle">
+							<i class="<{$vo.icon}>"></i>
+							<span class="menu-text"><{$vo.name}></span>
+							<b class="arrow icon-angle-down"></b>
+						</a>
+						<ul class="submenu">
+							<{foreach $vo.child as $k1 => $ch}>
+							<li class="<{$ch.active}>">
+								<a href="index.php?r=<{$ch.route}>">
+									<i class="icon-double-angle-right"></i>
+									<{$ch.name}>
+								</a>
+							</li>
+							<{/foreach}>
+						</ul>
+					</li>
+				<{/if}>
+			<{/foreach}>
+		</ul><!-- /.nav-list -->
+
+		<div class="sidebar-collapse" id="sidebar-collapse">
+			<i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+		</div>
+
+		<script type="text/javascript">
+			try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
+		</script>
+	</div>
+</div>

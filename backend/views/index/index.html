@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <{include 'include/header.html'}>
+</head>
+<body>
+<{include 'include/common.html'}>
+
+<div class="main-container" id="main-container">
+    <{include 'include/menu.html'}>
+    <div class="main-content">
+        <div class="breadcrumbs" id="breadcrumbs">
+            <script type="text/javascript">
+                try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+            </script>
+            <ul class="breadcrumb">
+                <li><i class="icon-home home-icon"></i><a href="index.php?r=index/index">首页</a></li>
+                <li class="active"><{if $title == '首页'}>面板<{else}><{$title}><{/if}></li>
+            </ul><!-- .breadcrumb -->
+        </div>
+        <div class="page-content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="alert alert-block alert-success">
+                        <button type="button" class="close" data-dismiss="alert">
+                            <i class="icon-remove"></i>
+                        </button><i class="icon-ok green"></i>欢迎使用
+                        <strong class="green">后台管理系统<small>(v1.0)</small></strong>,后台管理系统.
+                    </div>
+                    <div class="widget-box transparent ">
+                        <div class="widget-header widget-header-small" style="margin-bottom: 20px;">
+                            <h4 class="blue smaller"><i class="icon-user blue"></i>账号信息</h4>
+                        </div>
+                        <div class="profile-user-info profile-user-info-striped" style="border: 0px;">
+                            <div class="profile-info-row">
+                                <div class="profile-info-name"> 账号 </div>
+                                <div class="profile-info-value"><span class="editable"><{$userIdentity->username}></span></div>
+                            </div>
+                            <div class="profile-info-row">
+                                <div class="profile-info-name"> 邮箱 </div>
+                                <div class="profile-info-value"><span class="editable"><{$userIdentity->email}></span></div>
+                            </div>
+                            <div class="profile-info-row">
+                                <div class="profile-info-name"> 上次登录时间 </div>
+                                <div class="profile-info-value">
+                                    <span class="editable"><{$userIdentity->last_time|date_format:"%Y-%m-%d %H:%M:%S"}></span>
+                                </div>
+                            </div>
+                            <div class="profile-info-row">
+                                <div class="profile-info-name"> 上次登录IP </div>
+                                <div class="profile-info-value"><span class="editable"><{$userIdentity->last_ip}></span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="widget-box transparent ">
+                        <div class="widget-header widget-header-small" style="margin: 20px 0px;">
+                            <h4 class="blue smaller"><i class="icon-desktop blue"></i>系统信息</h4>
+                        </div>
+                        <div class="profile-user-info profile-user-info-striped"  style="border: 0px;">
+                            <div class="profile-info-row">
+                                <div class="profile-info-name"> 操作系统 </div>
+                                <div class="profile-info-value"><span class="editable"><{php_uname('s')}></span></div>
+                            </div>
+                            <div class="profile-info-row">
+                                <div class="profile-info-name"> 服务器 </div>
+                                <div class="profile-info-value"><span class="editable"><{$SERVER_SOFTWARE}></span></div>
+                            </div>
+                            <div class="profile-info-row">
+                                <div class="profile-info-name"> PHP版本 </div>
+                                <div class="profile-info-value"><span class="editable">PHP <{$smarty.const.PHP_VERSION}></span></div>
+                            </div>
+                            <div class="profile-info-row">
+                                <div class="profile-info-name"> Mysql版本 </div>
+                                <div class="profile-info-value"><span class="editable">Mysql <{$MYSQL_VERSION}></span></div>
+                            </div>
+                            <div class="profile-info-row">
+                                <div class="profile-info-name"> Yii版本 </div>
+                                <div class="profile-info-value"><span class="editable">Yii <{$Yii_VERSION}></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<{include 'include/footer.html'}>
+</body>
+</html>
+
