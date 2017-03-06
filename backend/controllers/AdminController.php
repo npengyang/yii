@@ -49,7 +49,7 @@ class AdminController extends BaseController
             if($post['password'] !== $post['qrPwd']){
                 ajaxReturn(0,'俩次输入密码不一致');
             }
-            //测试提交
+            
         }
         return $this->display('add.html');
     }
