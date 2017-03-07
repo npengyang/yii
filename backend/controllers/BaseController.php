@@ -20,7 +20,6 @@ class BaseController extends \yii\web\Controller
         }
 
         $this->userid = Yii::$app->user->id;
-        $this->userid = 2;
         $this->username = Yii::$app->user->identity->username;
         $action = Yii::$app->controller->getRoute();//获取当前访问的控制器以及方法site/login
         $menus = Menu::getMenus($this->userid,$action);//获取菜单
@@ -33,7 +32,7 @@ class BaseController extends \yii\web\Controller
         if($UserObj){
             return true;
         }else{
-            if($action = "index/index"){
+            if($action == "index/index"){
                 return true;
             }
             if(!Yii::$app->user->can($action)){
