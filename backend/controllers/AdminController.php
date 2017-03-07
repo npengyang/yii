@@ -3,6 +3,7 @@
 namespace backend\controllers;
 use common\models\User;
 use Yii;
+use yii\base\Exception;
 use yii\data\Pagination;
 use yii\widgets\LinkPager;
 
@@ -49,7 +50,24 @@ class AdminController extends BaseController
             if($post['password'] !== $post['qrPwd']){
                 ajaxReturn(0,'俩次输入密码不一致');
             }
-            
+            $data->username = $post['username'];
+            $data->setPassword($post['password']);
+            $data->email = $post['email'];
+            $data->generateAuthKey();
+            $begin = $data->getDb()->beginTransaction();//开启事物
+            try{
+                $data->save();
+                if($data->primaryKey){//保存成功后续添加角色
+                    $admin = Yii::$app->authManager->createRole('admin_'.$data->id);//创建角色
+                    Yii::$app->authManager->add($admin);
+                    Yii::$app->authManager->assign($admin,$data->id);//为用户分配角色
+                }
+                $begin->commit();
+                ajaxReturn(1,'添加成功');
+            }catch (Exception $e){
+                $begin->rollBack();
+                ajaxReturn(0,'添加失败');
+            }
         }
         return $this->display('add.html');
     }
