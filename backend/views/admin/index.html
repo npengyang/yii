@@ -50,7 +50,9 @@
                                         <td><{$vo.created_at|date_format:"%Y-%m-%d"}></td>
                                         <td><{$vo.last_time|date_format:"%Y-%m-%d"}></td>
                                         <td><{$vo.last_ip}></td>
-                                        <td></td>
+                                        <td>
+                                            <a href="index.php?r=admin/del" class="btn btn-danger" data-selector="common-confirm-btn" data-tip="确定删除当前管理员么？" btn-role="delete" data-id="<{$vo.id}>" data-method="post">删除</a>
+                                        </td>
                                     </tr>
                                 <{/foreach}>
 

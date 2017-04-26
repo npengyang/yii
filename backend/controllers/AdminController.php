@@ -12,7 +12,8 @@ class AdminController extends BaseController
     public function actionIndex()
     {
         $keyword = Yii::$app->request->post('keyword','') ? Yii::$app->request->post('keyword','') : Yii::$app->request->get('keyword','');
-        $data = User::find()->filterWhere(['or',['like','username',"$keyword"],['like','email',"$keyword"]])
+        $data = User::find()->where(['isdel'=>0])
+        ->filterWhere(['or',['like','username',"$keyword"],['like','email',"$keyword"]])
             ->orderBy(['role'=>SORT_ASC,'created_at'=>SORT_DESC]);
         $pages = new Pagination(['totalCount' => $data->count(), 'pageSize' => 10]);
         $_GET['keyword'] = $keyword;
@@ -31,16 +32,6 @@ class AdminController extends BaseController
         $post = Yii::$app->request->post();
         if($post){
             $data = new User();
-            if(empty($post['username'])){
-                ajaxReturn(0,'用户名不能为空');
-            }
-            $checkUsername = $data->findByUsername($post['username']);
-            if($checkUsername){
-                ajaxReturn(0,'用户名已存在');
-            }
-            if(empty($post['email'])){
-                ajaxReturn(0,'邮箱不能为空');
-            }
             if(empty($post['password'])){
                 ajaxReturn(0,'密码不能为空');
             }
@@ -56,6 +47,11 @@ class AdminController extends BaseController
             $data->generateAuthKey();
             $begin = $data->getDb()->beginTransaction();//开启事物
             try{
+                if(!$data->validate()){
+                    foreach ($data->getFirstErrors() as $key => $e){
+                        ajaxReturn(0,$e);
+                    }
+                }
                 $data->save();
                 if($data->primaryKey){//保存成功后续添加角色
                     $admin = Yii::$app->authManager->createRole('admin_'.$data->id);//创建角色
@@ -79,7 +75,17 @@ class AdminController extends BaseController
 
     public function actionDel()
     {
-        return $this->display('index.html');
+        $id = Yii::$app->request->post('id','intval',0);
+        if(!$id){
+            ajaxReturn(0,'系统错误，请稍受再试');
+        }
+        $model = User::findOne($id);
+        $model->updated_at = time();
+        $model->isdel = 1;
+        if($model->save()){
+            ajaxReturn(1,'操作成功!');
+        }
+        ajaxReturn(0,'操作失败!');
     }
 
 }

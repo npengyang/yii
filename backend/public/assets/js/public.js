@@ -28,5 +28,41 @@ $(function(){
         });
         return false;
     });
+
+    //common confirm 调用
+    $('body').delegate('[data-selector=common-confirm-btn]','click',function(){
+        var self=$(this);
+        var msg=self.data('tip');
+        var data={};
+        var _method = 'get';
+        if(self.data('method') == "get"){
+            _method="get";
+        }
+        if(self.data('method') == "post" && self.data('id')){
+            _method="post";
+            data={'id':self.data('id')}
+        }
+        _qlk.confirm(msg,function(){
+            $.ajax({
+                url:self.attr('href'),
+                dataType:'json',
+                data:data,
+                type:_method,
+                success:function(d){
+                    if(d["flag"]==1 || d["status"]==1){
+                        _qlk.success(d["msg"]);
+                        setTimeout(function(){
+                            var url=(!!d["redirect_url"])&&(d["redirect_url"])||(top.window.location.href);
+                            top.window.location.reload();
+                        },1000);
+                    }else{
+                        _qlk.error(d["msg"]);
+                    }
+                }
+            });
+        });
+        return false;
+    });
 });
+
 

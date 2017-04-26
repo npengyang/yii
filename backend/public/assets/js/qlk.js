@@ -43,5 +43,26 @@ qlk.prototype.submit=function(form,btn){
     });
 }
 
+//confirm
+qlk.prototype.confirm=function(msg,callback1,callback2){
+    layer.confirm(msg, {
+        title:'确认提醒',
+        btn: ['确定','取消'] //按钮
+    }, function(){
+        (!!callback1)&&callback1();
+    },function(){
+        (!!callback2)&&callback2();
+    });
+};
+
+//error
+qlk.prototype.error=function(msg){
+    layer.msg(msg, {icon: 2});
+};
+//success
+qlk.prototype.success=function(msg){
+    layer.msg(msg, {icon: 1});
+};
+
 var _qlk = new qlk();
 

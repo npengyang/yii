@@ -53,6 +53,9 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            ['username','required','message'=>'用户名不能为空'],
+            ['username','unique','message'=>'用户名已存在'],
+            ['email','email','message'=>'邮箱格式不正确'],
         ];
     }
 
@@ -80,7 +83,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findByUsername($username)
     {
-        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['username' => $username,'isdel'=>0, 'status' => self::STATUS_ACTIVE]);
     }
 
     /**
