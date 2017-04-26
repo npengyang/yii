@@ -68,16 +68,60 @@ class AdminController extends BaseController
         return $this->display('add.html');
     }
 
+    /**修改
+     * @return string
+     */
     public function actionUp()
     {
-        return $this->display('index.html');
+        $id = Yii::$app->request->get('id',0);
+        $user = User::findOne($id);
+        if(Yii::$app->request->isPost){
+            $post = Yii::$app->request->post();
+            if(!empty($post['status'])){
+                if(empty($post['password'])){
+                    ajaxReturn(0,'密码不能为空');
+                }
+                if(empty($post['qrPwd'])){
+                    ajaxReturn(0,'确认密码不能为空');
+                }
+                if($post['password'] !== $post['qrPwd']){
+                    ajaxReturn(0,'俩次输入密码不一致');
+                }
+                $user->setPassword($post['password']);
+                $user->generateAuthKey();
+            }
+            $user->username = $post['username'];
+            $user->email = $post['email'];
+            $begin = $user->getDb()->beginTransaction();//开启事物
+            try{
+                if(!$user->validate()){
+                    foreach ($user->getFirstErrors() as $key => $e){
+                        ajaxReturn(0,$e);
+                    }
+                }
+                $user->save();
+                $begin->commit();
+                ajaxReturn(1,'修改成功');
+            }catch (Exception $e){
+                $begin->rollBack();
+                ajaxReturn(0,'修改失败');
+            }
+        }
+        $this->assign('user',$user);
+        return $this->display('up.html');
     }
 
+    /**
+     * 删除
+     */
     public function actionDel()
     {
-        $id = Yii::$app->request->post('id','intval',0);
+        $id = Yii::$app->request->post('id',0);
         if(!$id){
             ajaxReturn(0,'系统错误，请稍受再试');
+        }
+        if($id == 1){
+            ajaxReturn(0,'不能删除超级管理员！');
         }
         $model = User::findOne($id);
         $model->updated_at = time();

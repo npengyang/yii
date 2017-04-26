@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<{include 'include/header.html'}>
+</head>
+<body>
+<div class="main-container" id="main-container">
+	<div class="main-content">
+		<form class="form-horizontal" method="post" action="index.php?r=admin/up&id=<{$user.id}>" data-selector="common-form" data-jump="index.php?r=admin/index">
+			<div class="form-group">
+				<label class="col-xs-2 control-label text-center">用户名</label>
+				<div class="col-xs-10">
+					<p class="col-xs-2 control-label text-center"><{$user.username}></p>
+					<input  type="hidden" value="<{$user.username}>" name="username">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-2 control-label text-center">邮箱</label>
+				<div class="col-xs-10">
+					<input type="text" name="email" class="form-control" placeholder="请输入邮箱" value="<{$user.email}>">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-2 control-label text-center">是否改密码</label>
+				<div class="col-xs-10">
+					<input type="checkbox" name="status" value="1">
+				</div>
+			</div>
+			<div id="adminUpHidden">
+			<div class="form-group">
+				<label class="col-xs-2 control-label text-center">密码</label>
+				<div class="col-xs-10">
+					<input type="password" name="password" class="form-control" placeholder="请输入密码">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-xs-2 control-label text-center">确认密码</label>
+				<div class="col-xs-10">
+					<input type="password" name="qrPwd" class="form-control" placeholder="请输入密码">
+				</div>
+			</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10 text-right">
+					<button type="submit" class="btn btn-primary">提交</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+</body>
+<{include 'include/footer.html'}>
+<script>
+	$(function(){
+		$("#adminUpHidden").hide();
+		$("input[name='status']").click(function(){
+			var flag = $(this).prop('checked');
+			if(flag){
+				$("#adminUpHidden").show();
+			}else{
+				$("#adminUpHidden").hide();
+			}
+		});
+	})
+</script>
+</html>

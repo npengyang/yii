@@ -52,6 +52,7 @@
                                         <td><{$vo.last_ip}></td>
                                         <td>
                                             <a href="index.php?r=admin/del" class="btn btn-danger" data-selector="common-confirm-btn" data-tip="确定删除当前管理员么？" btn-role="delete" data-id="<{$vo.id}>" data-method="post">删除</a>
+                                            <a class="btn btn-info" data-selector="calllayer-btn" data-layerheight="363px" data-layerwidth="640px" data-layertitle="修改管理员" btn-role="edit" href="index.php?r=admin/up&id=<{$vo.id}>">修改</a>
                                         </td>
                                     </tr>
                                 <{/foreach}>
