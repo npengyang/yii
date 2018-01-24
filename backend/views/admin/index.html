@@ -23,7 +23,7 @@
                     <div class="table-responsive">
                         <div class="table-header">管理员列表</div>
                         <div class="page-funcs">
-                            <a href="index.php?r=admin/add" class="btn" data-selector="calllayer-btn" data-layerheight="333px" data-layerwidth="640px" data-layertitle="新建管理员" btn-role="add">新建管理员</a>
+                            <a href="index.php?r=admin/add&authAjax=1" class="btn" data-selector="calllayer-btn" data-layerheight="333px" data-layerwidth="640px" data-layertitle="新建管理员" btn-role="add">新建管理员</a>
                             <form action="index.php?r=admin/index" method="post">
                                 <input type="text" placeholder="请输入标题/内容" name="keyword" value="<{$keyword}>" />
                                 <button type="submit" class="btn" btn-role="search">搜索</button>
@@ -52,7 +52,8 @@
                                         <td><{$vo.last_ip}></td>
                                         <td>
                                             <a href="index.php?r=admin/del" class="btn btn-danger" data-selector="common-confirm-btn" data-tip="确定删除当前管理员么？" btn-role="delete" data-id="<{$vo.id}>" data-method="post">删除</a>
-                                            <a class="btn btn-info" data-selector="calllayer-btn" data-layerheight="363px" data-layerwidth="640px" data-layertitle="修改管理员" btn-role="edit" href="index.php?r=admin/up&id=<{$vo.id}>">修改</a>
+                                            <a class="btn btn-info" data-selector="calllayer-btn" data-layerheight="363px" data-layerwidth="640px" data-layertitle="修改管理员" btn-role="edit" href="index.php?r=admin/up&id=<{$vo.id}>&authAjax=1">修改</a>
+                                            <a class="btn btn-warning" data-selector="calllayer-btn" data-layerheight="363px" data-layerwidth="640px" data-layertitle="修改【<{$vo.username}>】的权限" btn-role="edit" href="index.php?r=admin/auth-item-child&id=<{$vo.id}>&authAjax=1">权限</a>
                                         </td>
                                     </tr>
                                 <{/foreach}>

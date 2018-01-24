@@ -37,6 +37,7 @@ class BaseController extends \yii\web\Controller
             }
             if(!Yii::$app->user->can($action)){
                 if(Yii::$app->request->isPost)ajaxReturn(0,'对不起，您现在还没获此操作的权限');//ajax访问无权限提示
+                if(Yii::$app->request->get('authAjax') == 1){echo '对不起，您现在还没获此操作的权限';exit;}
                 throw new \yii\web\UnauthorizedHttpException('对不起，您现在还没获此操作的权限');
             }
         }

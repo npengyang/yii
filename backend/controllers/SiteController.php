@@ -31,6 +31,11 @@ class SiteController extends Controller
                         'allow' => true,
                         'roles' => ['@'],
                     ],
+                    [
+                        'actions' => ['tt'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
                 ],
             ],
             'verbs' => [
@@ -45,15 +50,19 @@ class SiteController extends Controller
     /**
      * @inheritdoc
      */
-    public function actions()
+   /* public function actions()
     {
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
         ];
+    }*/
+    public function actionError(){
+        $message = Yii::$app->getErrorHandler()->exception->getMessage();
+        $code = Yii::$app->getErrorHandler()->exception->statusCode;
+        return $this->display('error.html',['message'=>$message,'code'=>$code]);
     }
-
     /**
      * Displays homepage.
      *
@@ -114,6 +123,16 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+
+
+    public function actionTt(){
+        $data = User::findOne(['id'=>1]);
+        $data->setPassword("admin");
+        $data->generateAuthKey();
+        $data->validate();
+        dump($data->save());
     }
     
 }

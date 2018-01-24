@@ -132,4 +132,64 @@ class AdminController extends BaseController
         ajaxReturn(0,'操作失败!');
     }
 
+    /**
+     * 权限处理
+     */
+    public function actionAuthItemChild(){
+        $id = Yii::$app->request->get('id',0);
+        if(!$id){echo "系统错误，请稍受再试";exit;}
+        if($id == 1){echo "<br>&nbsp;&nbsp;&nbsp;&nbsp;超级管理员拥有所有权限！";exit;}
+        $userAuth = Yii::$app->getAuthManager()->getPermissionsByUser($id);//管理员拥有权限
+        $arrAuth = Yii::$app->getAuthManager()->getPermissions();//所有权限
+        $arr = [];
+        if($userAuth){
+            $userKey = array_keys($userAuth);
+            foreach ($arrAuth as $key => $auth){
+                $akey = strstr($key,"/",true);
+                if(!isset($arr[$akey]))$arr[$akey] = ['child'=>[]];
+                if(preg_match("/^\/index/",strstr($key,"/"))){
+                    $arr[$akey] = array_merge($arr[$akey],['name'=>$auth->name,'description'=>$auth->description,'checked'=>in_array($key,$userKey) ? 'checked' : '']);
+                }else{
+                    $arr[$akey]['child'][] = ['name'=>$auth->name,'description'=>$auth->description,'checked'=>in_array($key,$userKey) ? 'checked' : ''];
+                }
+                //$arr[] = ['name'=>$auth->name,'description'=>$auth->description,'checked'=>in_array($key,$userKey) ? 'checked' : ''];
+            }
+        }else{
+            foreach ($arrAuth as $key => $auth){
+                $akey = strstr($key,"/",true);
+                if(!isset($arr[$akey]))$arr[$akey] = ['child'=>[]];
+                if(preg_match("/^\/index/",strstr($key,"/"))){
+                    $arr[$akey] = array_merge($arr[$akey],['name'=>$auth->name,'description'=>$auth->description,'checked'=> '']);
+                }else{
+                    $arr[$akey]['child'][] = ['name'=>$auth->name,'description'=>$auth->description,'checked'=> ''];
+                }
+            }
+        }
+        dump($arr);exit;
+        $this->assign(['userid'=>$id,'auths'=>$arr]);
+        return $this->display('auth.html');
+    }
+
+    /**
+     * 保存权限
+     */
+    public function actionAuthAdd(){
+        $id = Yii::$app->request->get('id',0);
+        if(!$id){echo "系统错误，请稍受再试";exit;}
+        $auth = Yii::$app->request->post('auth',null);
+        if(empty($auth)) {
+            ajaxReturn(0, '请选择用户权限','');
+        }
+        $role_str = "admin_".$id;
+        $role = Yii::$app->authManager->getRole($role_str); // 获取角色
+        if($role)Yii::$app->authManager->remove($role);//如果存在删除
+        $admin = Yii::$app->authManager->createRole($role_str);//创建角色
+        Yii::$app->authManager->add($admin);
+        Yii::$app->authManager->assign($admin,$id);//为用户分配角色
+        foreach ($auth as $v) {
+            $permission = Yii::$app->authManager->getPermission($v); //获取具体权限
+            Yii::$app->authManager->addChild($admin, $permission); // 添加权限
+        }
+        ajaxReturn(1,'操作成功');
+    }
 }
