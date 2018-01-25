@@ -9,7 +9,7 @@
 		<form class="form-horizontal" method="post" action="index.php?r=admin/auth-add&id=<{$userid}>" data-selector="common-form" data-jump="index.php?r=admin/index">
 			<div class="checkbox">
 				<{foreach $auths as $key => $vo}>
-					<label>
+					<label> 
 						<input name="auth[]" class="ace" type="checkbox" value="<{$vo.name}>" <{$vo.checked}>>
 						<span class="lbl"> <{$vo.description}> </span>
 					</label><br>
