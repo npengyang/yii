@@ -12,7 +12,14 @@
 					<label>
 						<input name="auth[]" class="ace" type="checkbox" value="<{$vo.name}>" <{$vo.checked}>>
 						<span class="lbl"> <{$vo.description}> </span>
+					</label><br>
+				<{foreach $vo.child as $key => $v}>
+					<label>
+						<input name="auth[]" class="ace" type="checkbox" value="<{$v.name}>" <{$v.checked}>>
+						<span class="lbl"> <{$v.description}> </span>
 					</label>
+				<{/foreach}>
+				<br>
 				<{/foreach}>
 			</div>
 			<div class="form-group">

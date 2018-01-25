@@ -165,7 +165,6 @@ class AdminController extends BaseController
                 }
             }
         }
-        dump($arr);exit;
         $this->assign(['userid'=>$id,'auths'=>$arr]);
         return $this->display('auth.html');
     }
