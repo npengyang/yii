@@ -18,6 +18,7 @@ class AdminController extends BaseController
         $pages = new Pagination(['totalCount' => $data->count(), 'pageSize' => 10]);
         $_GET['keyword'] = $keyword;
         $result = $data->offset($pages->offset)->limit($pages->limit)->asArray()->all();
+
         
         $this->assign([
             "result" => $result,
