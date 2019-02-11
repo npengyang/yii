@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <{include 'include/header.html'}>
+</head>
+
+<body>
+<div class="main-container">
+    <div class="page-content">
+        <div class="row">
+            <div class="vertical-center">
+                <!-- PAGE CONTENT BEGINS -->
+                    <{$message}>
+                <{if $code == 404}>
+                    <p class="center"><a href="index.php?r=admin/index">5秒后自动跳转或直接点击这里</a></p>
+                <{else}>
+                    <p class="center"><a href="javascript:void(-1)">3秒后自动跳转或直接点击这里</a></p>
+                <{/if}>
+                <!-- PAGE CONTENT ENDS -->
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div>
+</div><!-- /.main-container -->
+
+<{include 'include/footer.html'}>
+
+</body>
+<script>
+    $(document).ready(function () {
+        setTimeout(function(){
+            var code = "<{$code}>";
+                if(code == 404){
+                   window.location.href = "index.php?r=admin/index";
+                }else{
+                    window.history.go(-1);
+                }
+        },3000);
+    });
+</script>
+</html>

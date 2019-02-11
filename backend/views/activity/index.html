@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+  <meta charset="utf-8" />
+  <meta content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" name="viewport" />
+  <title>h5</title>
+  <link href="/backend/public/assets/css/h5.css" rel="stylesheet">
+  <script src="/backend/public/assets/js/jquery-1.10.2.min.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="main_header">
+      <audio controls="controls" id="music2"  hidden loop="loop">
+        <source src="/backend/public/assets/mp3/ganghaoyudaoni.mp3" type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
+      <div class="mp3_img">
+        <img src="/backend/public/assets/images/gallery/thumb-6.jpg" id="music_btn2"/>
+      </div>
+    </div>
+</body>
+<script>
+  $(function(){
+    var music = document.getElementById('music2');
+    if (music.paused){
+      $(".mp3_img img").addClass('Rotation');
+      //music.play();
+    }
+    console.log(2);
+    $(".mp3_img").click(function(){
+      var music = document.getElementById('music2');
+      var music_btn = document.getElementById('music_btn2');
+      if (music.paused){
+        music.play();
+        music_btn.src = '/backend/public/assets/images/gallery/thumb-6.jpg';
+        $(".mp3_img img").addClass('Rotation');
+      }
+      else{
+        music.pause();
+        console.log(1);
+        music_btn.src = '/backend/public/assets/images/gallery/thumb-5.jpg';
+        $(".mp3_img img").removeClass('Rotation');
+      }
+    })
+    console.log(3);
+  })
+
+</script>
+</html>

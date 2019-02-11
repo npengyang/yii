@@ -1,0 +1,36 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    margin: 0 auto;
+    min-width: 320px;
+    max-width: 540px;
+    font-size: 14px;
+    background: red;
+}
+.main_header{
+    width: 100%;
+    height: 100%;
+}
+
+.mp3_img{
+    text-align: center;
+    margin-top: 100px;
+}
+
+.mp3_img img{
+    border-radius:250px;
+}
+@-webkit-keyframes rotation{
+    from {-webkit-transform: rotate(0deg);}
+    to {-webkit-transform: rotate(360deg);}
+}
+
+.Rotation{
+    -webkit-transform: rotate(360deg);
+    animation: rotation 3s linear infinite;
+    -moz-animation: rotation 3s linear infinite;
+    -webkit-animation: rotation 3s linear infinite;
+    -o-animation: rotation 3s linear infinite;
+}
